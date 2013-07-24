@@ -1,4 +1,11 @@
 rs.initiate()
+
+// fixup hostname of master (fixes issue on EC2 by using the public hostname
+// instead of the ec2 internal hostname it autodetects
+cfg = rs.conf()
+cfg.members[0].host = "{{inventory_hostname}}:{{mongod_port}}"
+rs.reconfig(cfg)
+
 sleep(13000)
 {% for host in groups['replication_servers'] %}
 rs.add("{{ host }}:{{ mongod_port }}")
