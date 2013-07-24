@@ -4,6 +4,9 @@
 - name: Create the hosts file for all machines
   template: src=hosts.j2 dest=/etc/hosts
 
+- name: Install the python-selinux package
+  yum: name=libselinux-python state=installed
+
 - name: Create the repository for 10Gen  
   copy: src=10gen.repo.j2 dest=/etc/yum.repos.d/10gen.repo
 
